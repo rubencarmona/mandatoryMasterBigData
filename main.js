@@ -20,11 +20,19 @@ appendYAxis();
 appendChartBars();
 
 // 1. let's start by selecting the SVG Node
+/*
 function setupCanvasSize() {
   margin = {top: 0, left: 80, bottom: 20, right: 30};
   width = 960 - margin.left - margin.right;
   height = 120 - margin.top - margin.bottom;
 }
+*/
+
+function setupCanvasSize() {
+    margin = {top: 0, left: 200, bottom: 50, right: 60};
+    width = 1500;
+    height = 300;
+  }
 
 function appendSvg(domElement) {
   svg = d3.select(domElement).append("svg")
@@ -41,6 +49,27 @@ function appendSvg(domElement) {
 // domain == data (data from 0 to maxSales) boundaries
 function setupXScale()
 {
+    x = d3.scaleBand()
+        .rangeRound([0,width])
+        .domain(totalSales.map(function(d, i) {
+            return d.product;
+        }));
+}
+
+function setupYScale()
+{
+    var maximumSales = d3.max(totalSales, function(d, i) {
+        return d.sales;
+    });
+
+    y = d3.scaleLinear()
+        .range([0, height])
+        .domain([maximumSales, 0]);
+}
+
+/*
+function setupXScale()
+{
   var maxSales = d3.max(totalSales, function(d, i) {
     return d.sales;
   });
@@ -50,10 +79,13 @@ function setupXScale()
     .domain([0, maxSales]);
 
 }
+*/
 
 // Now we don't have a linear range of values, we have a discrete
 // range of values (one per product)
 // Here we are generating an array of product names
+
+/*
 function setupYScale()
 {
   y = d3.scaleBand()
@@ -62,6 +94,7 @@ function setupYScale()
       return d.product;
     }));
 }
+*/
 
 function appendXAxis() {
   // Add the X Axis
@@ -95,13 +128,16 @@ function appendChartBars()
     //    width: Now that we have the mapping previously done (linear)
     //           we just pass the sales and use the X axis conversion to
     //           get the right value
+    //       .attr('y', y(0))
     newRects.append('rect')
-      .attr('x', x(0))
-      .attr('y', function(d, i) {
-        return y(d.product);
+      .attr('y', function(d,i) {
+          return y(d.sales);
       })
-      .attr('height', y.bandwidth)
-      .attr('width', function(d, i) {
-        return x(d.sales);
-      });
+      .attr('x', function(d, i) {
+        return x(d.product);
+      })
+      .attr('height', function(d, i) {
+          return height - y(d.sales);
+      })
+      .attr('width', x.bandwidth);
 }
