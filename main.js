@@ -29,8 +29,8 @@ function setupCanvasSize() {
 */
 
 function setupCanvasSize() {
-    margin = {top: 0, left: 200, bottom: 50, right: 60};
-    width = 1500;
+    margin = {top: 50, left: 200, bottom: 50, right: 60};
+    width = 750;
     height = 300;
   }
 
@@ -116,6 +116,7 @@ function appendChartBars()
   var rects = svg.selectAll('rect')
     .data(totalSales);
 
+
     // Now it's time to append to the list of Rectangles we already have
     var newRects = rects.enter();
 
@@ -139,5 +140,34 @@ function appendChartBars()
       .attr('height', function(d, i) {
           return height - y(d.sales);
       })
-      .attr('width', x.bandwidth);
+      .attr('width', function(d, i) {
+          return x.bandwidth() - 5;
+      })
+      .style('fill', function(d, i) {
+          return d.color
+      });
 }
+
+
+    /*
+    var legend = svg.selectAll('.legend')
+    .enter().data(totalSales)
+    .append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(0, ${width} + 10)`);
+
+    legend.append("rect")
+        .attr("x", 'width' - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", function(d, i) {
+            return d.color
+        });
+
+    legend.append("text")
+        .attr("x", 'width' - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d, i) { return d.product; });
+    */
