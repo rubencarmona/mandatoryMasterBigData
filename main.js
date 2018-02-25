@@ -18,6 +18,7 @@ setupYScale();
 appendXAxis();
 appendYAxis();
 appendChartBars();
+appendLegend();
 
 // 1. let's start by selecting the SVG Node
 /*
@@ -113,49 +114,15 @@ function appendChartBars()
 }
 
 
-function legend()
+function appendLegend()
 {
-    var legend = svg.selectAll(".legend")
-      .data(totalSales)
-      .enter().append("g")
-      .attr("class", "legend")
-      .attr("transform", `translate(0, ${width} + ${margin.left} + ${margin.right} + 200)`)//function(d,i) { return "translate(0," + i * 20 + ")"; })
-      .style("opacity","0");
-
-    legend.append("rect")
-        .attr("x", width - 18)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", function(d, i) { return d.color; });
-
-    legend.append("text")
-        .attr("x", width - 24)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(function(d, i) {return d.product; });
+    svg.append('g')
+        .attr('class', 'legend')
+            .selectAll('text')
+            .data(totalSales)
+                .enter()
+                    .append('text')
+                        .text(function(d) { return '· ' + d.product;})
+                        .attr('fill', function(d) {return d.color;})
+                        .attr('y', function(d, i) {return 20 *(i, 1);})
 }
-
-
-    /*
-    var legend = svg.selectAll('.legend')
-    .enter().data(totalSales)
-    .append("g")
-    .attr("class", "legend")
-    .attr("transform", `translate(0, ${width} + 10)`);
-
-    legend.append("rect")
-        .attr("x", 'width' - 18)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", function(d, i) {
-            return d.color
-        });
-
-    legend.append("text")
-        .attr("x", 'width' - 24)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(function(d, i) { return d.product; });
-    */
