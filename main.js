@@ -29,14 +29,14 @@ function setupCanvasSize() {
 */
 
 function setupCanvasSize() {
-    margin = {top: 50, left: 200, bottom: 50, right: 60};
-    width = 750;
-    height = 300;
+    margin = {top: 50, left: 20, bottom: 50, right: 60};
+    width = 400 - margin.left - margin.right;
+    height = 300 - margin.top - margin.bottom;
   }
 
 function appendSvg(domElement) {
   svg = d3.select(domElement).append("svg")
-              .attr("width", width + margin.left + margin.right)
+              .attr("width", width + margin.left + margin.right + 200)
               .attr("height", height + margin.top + margin.bottom)
               .append("g")
               .attr("transform",`translate(${margin.left}, ${margin.top})`);
@@ -67,34 +67,6 @@ function setupYScale()
         .domain([maximumSales, 0]);
 }
 
-/*
-function setupXScale()
-{
-  var maxSales = d3.max(totalSales, function(d, i) {
-    return d.sales;
-  });
-
-  x = d3.scaleLinear()
-    .range([0, width])
-    .domain([0, maxSales]);
-
-}
-*/
-
-// Now we don't have a linear range of values, we have a discrete
-// range of values (one per product)
-// Here we are generating an array of product names
-
-/*
-function setupYScale()
-{
-  y = d3.scaleBand()
-    .rangeRound([0, height])
-    .domain(totalSales.map(function(d, i) {
-      return d.product;
-    }));
-}
-*/
 
 function appendXAxis() {
   // Add the X Axis
@@ -120,16 +92,6 @@ function appendChartBars()
     // Now it's time to append to the list of Rectangles we already have
     var newRects = rects.enter();
 
-    // Let's append a new Rectangles
-    // UpperCorner:
-    //    Starting x position, the start from the axis
-    //    Starting y position, where the product starts on the y scale
-    // React width and height:
-    //    height: the space assign for each entry (product) on the Y axis
-    //    width: Now that we have the mapping previously done (linear)
-    //           we just pass the sales and use the X axis conversion to
-    //           get the right value
-    //       .attr('y', y(0))
     newRects.append('rect')
       .attr('y', function(d,i) {
           return y(d.sales);
@@ -146,6 +108,32 @@ function appendChartBars()
       .style('fill', function(d, i) {
           return d.color
       });
+
+    
+}
+
+
+function legend()
+{
+    var legend = svg.selectAll(".legend")
+      .data(totalSales)
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", `translate(0, ${width} + ${margin.left} + ${margin.right} + 200)`)//function(d,i) { return "translate(0," + i * 20 + ")"; })
+      .style("opacity","0");
+
+    legend.append("rect")
+        .attr("x", width - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", function(d, i) { return d.color; });
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d, i) {return d.product; });
 }
 
 
