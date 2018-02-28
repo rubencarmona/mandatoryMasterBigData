@@ -44,10 +44,7 @@ function appendSvg(domElement) {
 
 }
 
-// Now on the X axis we want to map totalSales values to
-// pixels
-// in this case we map the canvas range 0..350, to 0...maxSales
-// domain == data (data from 0 to maxSales) boundaries
+
 function setupXScale()
 {
     x = d3.scaleBand()
@@ -70,28 +67,22 @@ function setupYScale()
 
 
 function appendXAxis() {
-  // Add the X Axis
   svg.append("g")
     .attr("transform",`translate(0, ${height})`)
     .call(d3.axisBottom(x));
 }
 
 function appendYAxis() {
-  // Add the Y Axis
   svg.append("g")
   .call(d3.axisLeft(y));
 }
 
 function appendChartBars()
 {
-  // 2. Now let's select all the rectangles inside that svg
-  // (right now is empty)
   var divTooltip = d3.select("body").append("div").attr("class", "toolTip");
   var rects = svg.selectAll('rect')
     .data(totalSales);
 
-
-    // Now it's time to append to the list of Rectangles we already have
     var newRects = rects.enter();
 
     newRects.append('rect')

@@ -1,6 +1,7 @@
 # Module 7. Data Visualization.
 ## Mandatory Task
 ## Barchart creation
+### Rubén Carmona Pardo (*rubencpardo@gmail.com*)
 
 The aim of this task is ot display a barchart starting from barchart refractor samples found on d3js samples repository.
 
@@ -24,6 +25,7 @@ Looking at this first barchart, there are many things to do to obtain a barchart
 * Showing the chart vertically.
 
 **2) Showing the chart vertically**
+
 This is the first change done to the original because if adding a legend or adding the space between column was the first step achieved, maybe when changing the chart orientation it would be necessary to redo it.
 
 In order to do it, the actions must be taken in the following part of the original code:
@@ -69,6 +71,31 @@ Here, what you have to do is to change the data related to X and Y axis to the o
 **Solution**
 
 
-![Solution1](./pictures/solution1.png "Solution 1")
+![Solution1](./pictures/solution1.PNG "Solution 1")
 
+**2) Adding color to each band**
 
+In order to do it, firstly, it has been added to the data.js a new attribute called: 'color', related to every product.
+
+Then, when appending the rects to the chart, it best be specified a new attribute about style to fill these rects with their color:
+
+**Solution**
+
+```diff
+.style('fill', function(d, i) {
+          return d.color
+      });
+
+```
+**3) Adding space between columns**
+
+Due to the fact that it has been defined X axis with scaleBand, when specifying the width of the band, you have to add the distance in which every band will be separated.
+
+**Solution**
+```dif
+
+.attr('width', function(d, i) {
+          return x.bandwidth() - 5;
+      })
+
+```
