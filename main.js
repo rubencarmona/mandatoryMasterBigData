@@ -31,7 +31,7 @@ function setupCanvasSize() {
 
 function setupCanvasSize() {
     margin = {top: 50, left: 20, bottom: 50, right: 60};
-    width = 400 - margin.left - margin.right;
+    width = 760 - margin.left - margin.right;
     height = 300 - margin.top - margin.bottom;
   }
 
@@ -112,17 +112,68 @@ function appendChartBars()
 
     
 }
-
-
 function appendLegend()
 {
-    svg.append('g')
+    var color = d3.scaleOrdinal().range(["#98abc5", "#8a89a6", "#7b6888"])
+    var legend = svg.selectAll('.legend')
+        .data(totalSales)
+        .enter()
+        .append('g')
         .attr('class', 'legend')
-            .selectAll('text')
-            .data(totalSales)
-                .enter()
-                    .append('text')
-                        .text(function(d) { return '· ' + d.product;})
-                        .attr('fill', function(d) {return d.color;})
-                        .attr('y', function(d, i) {return 20 *(i, 1);})
+        .attr('transform', function(d, i) { 
+                return "translate(20," + i * 25 + ")"; 
+            });
+    legend.append('rect')
+        .attr('x', width - 19)
+        .attr('width', 19)
+        .attr('height', 19)
+        .style('fill', function(d, i) { return d.color;})
+        .style('stroke', function(d, i) { return d.color;});
+
+    legend.append('text')
+        .attr('x', width)
+        .attr('y', 9.5)
+        .attr("dy", "0.32em")
+        .text(function(d) { return d.product; });
 }
+/*
+function appendLegend()
+{
+    var legend = svg.append('g')
+                    .attr("transform",`translate(${width}, 0)`)
+                    .attr('class', 'legend')
+                    .selectAll('text')
+                    .data(totalSales)
+                        .enter()
+                            .append('text')
+                                .attr("x", width - 24)
+                                .attr("y", 9)
+                                .attr("dy", ".35em")
+                                .style("text-anchor", "end")
+                                .text(function(d) { return d.product; });
+}
+*/
+
+/*
+function appendLegend()
+{
+    var legend = svg.append('g')
+                    .attr("transform",`translate(${width}, 0)`)
+                    .attr('class', 'legend')
+                    .selectAll('text')
+                    .data(totalSales).enter();
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d.product; });
+
+    legend.append("rect")
+        .attr("x", width - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .attr("fill", function(d){ return d.color; });
+}
+*/
