@@ -86,6 +86,7 @@ function appendChartBars()
 {
   // 2. Now let's select all the rectangles inside that svg
   // (right now is empty)
+  var divTooltip = d3.select("body").append("div").attr("class", "toolTip");
   var rects = svg.selectAll('rect')
     .data(totalSales);
 
@@ -110,11 +111,10 @@ function appendChartBars()
           return d.color
       });
 
-    
+  
 }
 function appendLegend()
 {
-    var color = d3.scaleOrdinal().range(["#98abc5", "#8a89a6", "#7b6888"])
     var legend = svg.selectAll('.legend')
         .data(totalSales)
         .enter()
