@@ -11,4 +11,14 @@ Let's start showing an image of the final result and then it will be explained h
 Now, let's see step by step how it has been done:
 
 **1) Original canvan**
+
+
+
 ![Original](./pictures/original.png "BarChart Original")
+
+
+Looking at this first barchart, there are many things to do to obtain a barchart similar to the first one.
+>Adding space between columns.
+>Adding colors to each band.
+>Adding a legend.
+>Showing the chart vertically.
