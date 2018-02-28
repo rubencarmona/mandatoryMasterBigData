@@ -99,3 +99,35 @@ Due to the fact that it has been defined X axis with scaleBand, when specifying 
       })
 
 ```
+
+**4) Adding a legend**
+
+Let's, initially, show the function used to add the legend and then it will be explained.
+
+```diff
+
+function appendLegend()
+{
+    var legend = svg.selectAll('.legend')
+        .data(totalSales)
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function(d, i) { 
+                return "translate(20," + i * 25 + ")"; 
+            });
+    legend.append('rect')
+        .attr('x', width - 19)
+        .attr('width', 19)
+        .attr('height', 19)
+        .style('fill', function(d, i) { return d.color;})
+        .style('stroke', function(d, i) { return d.color;});
+
+    legend.append('text')
+        .attr('x', width)
+        .attr('y', 9.5)
+        .attr("dy", "0.32em")
+        .text(function(d) { return d.product; });
+}
+
+```
