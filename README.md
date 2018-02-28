@@ -131,3 +131,6 @@ function appendLegend()
 }
 
 ```
+
+First of all, you have to create a new group in the svg with a Legend class and, aimed to locate it into the right place of the body, it is used a transformation to it.
+After that, you have to append a rect per product with its respective text. The text is the name of the product.
