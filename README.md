@@ -18,7 +18,7 @@ Now, let's see step by step how it has been done:
 
 
 Looking at this first barchart, there are many things to do to obtain a barchart similar to the first one.
->Adding space between columns.
->Adding colors to each band.
->Adding a legend.
->Showing the chart vertically.
+* Adding space between columns.
+* Adding colors to each band.
+* Adding a legend.
+* Showing the chart vertically.
